@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "description": "Check browser supports ECMAScript API.",
   "repository": "https://github.com/rou/ECMAScript-checker",
+  "main": "index.js",
   "scripts": {
-    "start": "npm install && http-server public -p 3000",
+    "start": "npm install && node index.js",
     "postinstall": "bower install"
   },
   "author": "rou",
