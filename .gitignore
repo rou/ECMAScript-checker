@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io
 
 ### Bower ###
-bower_components
+public/lib/*
 
 
 ### Intellij ###
