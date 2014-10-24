@@ -1,0 +1,8 @@
+{
+  "name": "ECMAScript-checker",
+  "version": "0.0.1",
+  "description": "Check browser supports ECMAScript API.",
+  "author": "rou",
+  "license": "ISC"
+}
+

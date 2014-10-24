@@ -1,0 +1,22 @@
+{
+  "name": "ECMAScript-5-check",
+  "version": "0.0.1",
+  "authors": [
+    "rou <rou.mak@gmail.com>"
+  ],
+  "license": "ISC",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "mocha": "~2.0.1",
+    "chai": "~1.9.2",
+    "require": "*"
+  }
+}
