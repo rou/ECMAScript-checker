@@ -11,5 +11,8 @@ Node: 0.10.x
 ```bash
 $ npm install
 ```
+## Server
 
-
+```bash
+$ npm start
+```
