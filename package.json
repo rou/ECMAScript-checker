@@ -2,7 +2,13 @@
   "name": "ECMAScript-checker",
   "version": "0.0.1",
   "description": "Check browser supports ECMAScript API.",
+  "repository": "https://github.com/rou/ECMAScript-checker",
+  "scripts": {
+    "postinstall": "bower install"
+  },
   "author": "rou",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.3.12"
+  }
 }
-
