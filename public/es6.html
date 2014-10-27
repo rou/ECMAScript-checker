@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+  <meta http-equiv="content-style-type" content="text/css">
+  <meta http-equiv="content-script-type" content="text/javascript">
+  <title>ECMAScript 6 Checker</title>
+  <link rel="stylesheet" href="lib/mocha/mocha.css" />
+  <script src="lib/jquery/dist/jquery.min.js"></script>
+  <script src="lib/mocha/mocha.js"></script>
+  <script src="lib/chai/chai.js"></script>
+  <script>
+    mocha.setup('bdd');
+  </script>
+  <script src="es6.js"></script>
+  <script>
+    $(function() {
+      mocha.run();
+    });
+  </script>
+</head>
+<body>
+  <p style="margin-top: 55px">
+    <h3>Unsupported API</h3>
+    <ul>
+      <li>Unicode code point escapes</li>
+      <li>Symbol.hasInstance</li>
+    </ul>
+  </p>
+  <div id="mocha"></div>
+</body>
+</html>
