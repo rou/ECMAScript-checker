@@ -1,4 +1,4 @@
-describe('ECMAScript 5 API', function() {
+describe('ECMAScript 5', function() {
   var assert = chai.assert;
   describe('Object', function() {
     it('exists methods', function() {
@@ -110,21 +110,20 @@ describe('ECMAScript 5 API', function() {
       assert.equal('foobar'[3], 'b');
     });
   });
-  describe('globals', function() {
-    describe('#parseInt()', function() {
-      it('should ignores leading zeros', function() {
-        assert.equal(parseInt('010'), 10);
-      });
-    });
-    describe('undefined', function() {
-      it('should be immutable', function() {
-        undefined = 123;
-        assert.typeOf(undefined, 'undefined');
-        undefined = void 0;
-        assert.typeOf(undefined, 'undefined');
-      });
+  describe('#parseInt()', function() {
+    it('should ignores leading zeros', function() {
+      assert.equal(parseInt('010'), 10);
     });
   });
+  describe('undefined', function() {
+    it('should be immutable', function() {
+      undefined = 123;
+      assert.typeOf(undefined, 'undefined');
+      undefined = void 0;
+      assert.typeOf(undefined, 'undefined');
+    });
+  });
+
   function checkEnabled(checker) {
     var result = false,
       error = null;
