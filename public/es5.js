@@ -66,8 +66,10 @@ describe('ECMAScript 5 API', function() {
       assert.equal(obj.break, 1);
     });
     it('should be usable zero-width chars in identifiers', function() {
-      var _\u200c\u200d = true;
-      assert.equal(_\u200c\u200d, true);
+      checkEnabled('(function() {\
+        var _\u200c\u200d = 1;\
+        return _\u200c\u200d === 1;\
+      })();');
     });
   });
   describe('Date', function() {
@@ -123,4 +125,15 @@ describe('ECMAScript 5 API', function() {
       });
     });
   });
+  function checkEnabled(checker) {
+    var result = false,
+      error = null;
+    try {
+      result = eval(checker);
+    } catch (e) {
+      error = e;
+    }
+    assert.isNull(error, error ? error.message : undefined);
+    assert.isTrue(result);
+  }
 });
