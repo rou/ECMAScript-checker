@@ -172,6 +172,29 @@ describe('ECMAScript 6', function() {
     it('should be enabled "setPrototypeOf" method', function() {
       assert.typeOf(Object.setPrototypeOf, 'function');
     });
+    it('should be enabled "__proto__" in object literals', function() {
+      var passed = { __proto__ : [] } instanceof Array
+        && !({ __proto__ : null } instanceof Object);
+      var a = "__proto__";
+      try {
+        eval("passed = passed && !({ [a] : [] } instanceof Array)");
+      } catch(e) {
+      }
+      assert.isTrue(passed);
+    });
+    it('should be enabled "__proto__" property', function() {
+      checkEnabled('(function () {\
+        var a = {},\
+          desc = Object.getOwnPropertyDescriptor\
+            && Object.getOwnPropertyDescriptor(Object.prototype,"__proto__");\
+        return !!(desc\
+          && "get" in desc\
+          && "set" in desc\
+          && desc.configurable\
+          && !desc.enumerable\
+          && Object.create(a).__proto__ === a);\
+        })();');
+    });
   });
 
   describe('Function', function() {
@@ -251,6 +274,14 @@ describe('ECMAScript 6', function() {
     it('should be enabled "toMethod" method', function() {
       assert.typeOf(Function.prototype.toMethod, 'function');
     });
+    it('should be enabled "hoisted block-level function declaration"', function() {
+      checkEnabled('(function() {\
+        var passed = f() === 2 && g() === 4;\
+        if (true) { function f(){ return 1; } } else { function f(){ return 2; } }\
+        if (false){ function g(){ return 3; } } else { function g(){ return 4; } }\
+        return passed;\
+      })();');
+    });
   });
 
   describe('Array', function() {
@@ -299,6 +330,43 @@ describe('ECMAScript 6', function() {
         view.setFloat32(0, 0.1);       passed = passed && view.getFloat32(0)=== 0.10000000149011612;\
         view.setFloat64(0, 0.1);       passed = passed && view.getFloat64(0)=== 0.1;\
         return passed;\
+      })();');
+    });
+    it('should be enabled "from" method', function() {
+      assert.typeOf(Array.from, 'function');
+    });
+    it('should be enabled "of" method', function() {
+      assert.typeOf(Array.of, 'function');
+    });
+    it('should be enabled "copyWithin" method', function() {
+      assert.typeOf(Array.prototype.copyWithin, 'function');
+    });
+    it('should be enabled "find" method', function() {
+      assert.typeOf(Array.prototype.find, 'function');
+    });
+    it('should be enabled "findIndex" method', function() {
+      assert.typeOf(Array.prototype.findIndex, 'function');
+    });
+    it('should be enabled "fill" method', function() {
+      assert.typeOf(Array.prototype.fill, 'function');
+    });
+    it('should be enabled "keys" method', function() {
+      assert.typeOf(Array.prototype.keys, 'function');
+    });
+    it('should be enabled "values" method', function() {
+      assert.typeOf(Array.prototype.values, 'function');
+    });
+    it('should be enabled "entries" method', function() {
+      assert.typeOf(Array.prototype.entries, 'function');
+    });
+    it('should be enabled "[Symbol.unscopables]" method', function() {
+      checkEnabled('(function() {\
+        var unscopables = Array.prototype[Symbol.unscopables];\
+        var ns = "find,findIndex,fill,copyWithin,entries,keys,values".split(",");\
+        for (var i = 0; i < ns.length; i++) {\
+          if (!unscopables[ns[i]]) return false;\
+        }\
+        return true;\
       })();');
     });
   });
@@ -363,6 +431,13 @@ describe('ECMAScript 6', function() {
 //        return "\u{1d306}" == "\ud834\udf06";\
 //      })();');
     });
+    it('should be enabled "HTML" methods', function() {
+      var i, names = ["anchor", "big", "bold", "fixed", "fontcolor", "fontsize",
+        "italics", "link", "small", "strike", "sub", "sup"];
+      for (i = 0; i < names.length; i++) {
+        assert.typeOf(String.prototype[names[i]], 'function');
+      }
+    });
   });
 
   describe('Class', function() {
@@ -424,6 +499,27 @@ describe('ECMAScript 6', function() {
         return 0b10 === 2 && 0B10 === 2;\
       })();');
     });
+    it('should be enabled "isFinite" method', function() {
+      assert.typeOf(Number.isFinite, 'function');
+    });
+    it('should be enabled "isInteger" method', function() {
+      assert.typeOf(Number.isInteger, 'function');
+    });
+    it('should be enabled "isSafeInteger" method', function() {
+      assert.typeOf(Number.isSafeInteger, 'function');
+    });
+    it('should be enabled "isNaN" method', function() {
+      assert.typeOf(Number.isNaN, 'function');
+    });
+    it('should be enabled "EPSILON" constant', function() {
+      assert.typeOf(Number.EPSILON, 'number');
+    });
+    it('should be enabled "MIN_SAFE_INTEGER" constant', function() {
+      assert.typeOf(Number.MIN_SAFE_INTEGER, 'number');
+    });
+    it('should be enabled "MAX_SAFE_INTEGER" constant', function() {
+      assert.typeOf(Number.MAX_SAFE_INTEGER, 'number');
+    });
   });
 
   describe('RegExp', function() {
@@ -438,6 +534,21 @@ describe('ECMAScript 6', function() {
     it('should be enabled "u option"', function() {
       var re = new RegExp('.', 'u');
       assert.equal("吉".match(re)[0].length, 2);
+    });
+    it('should be enabled "match" method', function() {
+      assert.typeOf(RegExp.prototype.match, 'function');
+    });
+    it('should be enabled "replace" method', function() {
+      assert.typeOf(RegExp.prototype.replace, 'function');
+    });
+    it('should be enabled "search" method', function() {
+      assert.typeOf(RegExp.prototype.search, 'function');
+    });
+    it('should be enabled "split" method', function() {
+      assert.typeOf(RegExp.prototype.split, 'function');
+    });
+    it('should be enabled "compile" method', function() {
+      assert.typeOf(RegExp.prototype.compile, 'function');
     });
   });
 
@@ -531,6 +642,60 @@ describe('ECMAScript 6', function() {
       };
       assert.equal(a.foo, 1);
       assert.isUndefined(a.bar);
+    });
+  });
+
+  describe('Math', function() {
+    it('should be enabled "clz32"', function() {
+      assert.typeOf(Math.clz32, 'function');
+    });
+    it('should be enabled "imul"', function() {
+      assert.typeOf(Math.imul, 'function');
+    });
+    it('should be enabled "sign"', function() {
+      assert.typeOf(Math.sign, 'function');
+    });
+    it('should be enabled "log10"', function() {
+      assert.typeOf(Math.log10, 'function');
+    });
+    it('should be enabled "log2"', function() {
+      assert.typeOf(Math.log2, 'function');
+    });
+    it('should be enabled "log1p"', function() {
+      assert.typeOf(Math.log1p, 'function');
+    });
+    it('should be enabled "expm1"', function() {
+      assert.typeOf(Math.expm1, 'function');
+    });
+    it('should be enabled "cosh"', function() {
+      assert.typeOf(Math.cosh, 'function');
+    });
+    it('should be enabled "sinh"', function() {
+      assert.typeOf(Math.sinh, 'function');
+    });
+    it('should be enabled "tanh"', function() {
+      assert.typeOf(Math.tanh, 'function');
+    });
+    it('should be enabled "acosh"', function() {
+      assert.typeOf(Math.acosh, 'function');
+    });
+    it('should be enabled "asinh"', function() {
+      assert.typeOf(Math.asinh, 'function');
+    });
+    it('should be enabled "atanh"', function() {
+      assert.typeOf(Math.atanh, 'function');
+    });
+    it('should be enabled "hypot"', function() {
+      assert.typeOf(Math.hypot, 'function');
+    });
+    it('should be enabled "trunc"', function() {
+      assert.typeOf(Math.trunc, 'function');
+    });
+    it('should be enabled "fround"', function() {
+      assert.typeOf(Math.fround, 'function');
+    });
+    it('should be enabled "cbrt"', function() {
+      assert.typeOf(Math.cbrt, 'function');
     });
   });
 
