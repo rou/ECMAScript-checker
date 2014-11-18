@@ -34,36 +34,37 @@ describe('ECMAScript 5', function() {
       assert.equal(value, 1);
     });
     it('should be usable reserved words', function() {
-      var obj = {
-        switch: 0,
-        break: 1,
-        finally: 2,
-        this: 3,
-        case: 4,
-        for: 5,
-        throw: 6,
-        catch: 7,
-        function: 8,
-        try: 9,
-        continue: 10,
-        if: 11,
-        typeof: 12,
-        debugger: 13,
-        in: 14,
-        var: 15,
-        default: 16,
-        instanceof: 17,
-        void: 18,
-        delete: 19,
-        new: 20,
-        while: 21,
-        do: 22,
-        return: 23,
-        with: 24,
-        else: 25
-      };
-      assert.equal(obj.switch, 0);
-      assert.equal(obj.break, 1);
+      checkEnabled('(function() {' +
+        'var obj = {' +
+        'switch: 0,' +
+        'break: 1,' +
+        'finally: 2,' +
+        'this: 3,' +
+        'case: 4,' +
+        'for: 5,' +
+        'throw: 6,' +
+        'catch: 7,' +
+        'function: 8,' +
+        'try: 9,' +
+        'continue: 10,' +
+        'if: 11,' +
+        'typeof: 12,' +
+        'debugger: 13,' +
+        'in: 14,' +
+        'var: 15,' +
+        'default: 16,' +
+        'instanceof: 17,' +
+        'void: 18,' +
+        'delete: 19,' +
+        'new: 20,' +
+        'while: 21,' +
+        'do: 22,' +
+        'return: 23,' +
+        'with: 24,' +
+        'else: 25' +
+        '};' +
+        'return obj.switch === 0 && obj.break === 1;' +
+      '})();');
     });
     it('should be usable zero-width chars in identifiers', function() {
       checkEnabled('(function() {\
